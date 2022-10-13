@@ -11,7 +11,7 @@ storage_client = storage.Client()
 '''
 Create a New Bucket
 '''
-bucket_name = 'data_henry_pf'
+bucket_name = 'bucket-pf-henry'
 bucket = storage_client.bucket(bucket_name)
 bucket.location = 'US'
 #bucket = storage_client.create_bucket(bucket)
@@ -24,7 +24,7 @@ vars(bucket)
 '''
 Accesing a specific Bucket
 '''
-my_bucket = storage_client.get_bucket('data_henry_pf')
+my_bucket = storage_client.get_bucket('bucket-pf-henry')
 
 '''
 Upload Files
