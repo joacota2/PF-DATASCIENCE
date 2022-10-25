@@ -121,7 +121,7 @@ def getChunkDF(filepath,filename,chunklen,type='.csv'):
 
 
 
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = './Credenciales/GCS.json'
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = './Credentials/GCS.json'
 storage_client = storage.Client()
 
 def create_bucket(bucket_name):

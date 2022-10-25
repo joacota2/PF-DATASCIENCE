@@ -12,16 +12,16 @@ print('='*60,'\n Downloading Files\n','='*60)
 for i in range(5): # Change to obtain all files: for i in range(len(h.filenames)):
     URL = h.urls[i]
     response = requests.get(URL)
-    open("./Datasets/Descarga/{}.json.gz".format(h.filenames[i]), "wb").write(response.content)
+    open("./Datasets/Downloads/{}.json.gz".format(h.filenames[i]), "wb").write(response.content)
     print(h.filenames[i],'Downloaded!')
 
 # Listing files to be chunked
-onlyfiles = [f for f in listdir('./Datasets/Descarga/') if isfile(join('./Datasets/Descarga/', f))]
+onlyfiles = [f for f in listdir('./Datasets/Downloads/') if isfile(join('./Datasets/Downloads/', f))]
 # Chunking files
 print('='*60,'\n Chunking Files\n','='*60)
 for i in range(len(onlyfiles)):
     if(onlyfiles[i]!='.gitkeep'):
-        h.getChunkDF('./Datasets/Descarga/',onlyfiles[i],500000,type = '.csv')
+        h.getChunkDF('./Datasets/Downloads/',onlyfiles[i],500000,type = '.csv')
         print(onlyfiles[i],'Chunked!')
 
 # Listing files to Replace Nulls
