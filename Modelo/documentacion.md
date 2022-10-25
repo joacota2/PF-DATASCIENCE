@@ -28,12 +28,6 @@ En **modelo.ipynb se encuentran descriptos los pasos llevados a cabo en el prepr
 
 https://holowczak.com/python-programming-with-google-bigquery/8/?doing_wp_cron=1665680483.7020699977874755859375
 
-https://www.youtube.com/watch?v=ajTp60neMlc&t=119s
-
-https://www.youtube.com/watch?v=S0wNWOR4WoE
-
-https://www.youtube.com/watch?v=sEx8RwvT_-8
-
 https://pandas.pydata.org/docs/
 
 https://www.youtube.com/watch?v=sEx8RwvT_-8
