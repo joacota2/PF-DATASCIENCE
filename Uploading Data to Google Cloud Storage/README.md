@@ -10,4 +10,9 @@ Como es de conocimiento, los datasets originales estan guardados en la página o
 
 > 1. Descarga de datos
 
+La descarga de datos se realiza mediante la iteración de la siguiente función:
 
+```python
+response = requests.get(URL)
+    open("./Datasets/Downloads/{}.json.gz".format(h.filenames[i]), "wb").write(response.content)
+```
