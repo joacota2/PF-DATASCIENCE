@@ -35,7 +35,7 @@ Obteniendo al final subarchivos en la carpeta CSVs:
 
 ![1666741984496](image/README/1666741984496.png)
 
-## 4. ETL básico a los fragmentos
+## 4. Transformación básica a los fragmentos
 
 Los fragmentos son pasados por una etapa de transformación, la cual consiste en rellenar celdas con valores nulos y la separación de la columna helpfull en .
 
