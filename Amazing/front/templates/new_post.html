@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="content-section">
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <div class="card shadow-sm m-3 col-8">
+            <div class="card-body">
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4">Post a product</legend>
+                    <div class="form-floating mb-3">
+
+                        {% if form.title.errors %}
+
+                        {{ form.title(class='form-control is-invalid',
+                        id='floatingtitle',placeholder="name@example.com") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.title.errors %}
+                            <span> - {{ error }}</span>
+                            {% endfor %}
+                        </div>
+
+                        {% else %}
+
+                        {{ form.title(class='form-control', id='floatingtitle',placeholder="name@example.com") }}
+
+                        {% endif %}
+
+                        {{ form.title.label(for="floatingtitle") }}
+                    </div>
+                    <div class="form-floating mb-3">
+
+                        {% if form.description.errors %}
+
+                        {{ form.description(class='form-control is-invalid',
+                        id='floatingdescription',placeholder="name@example.com") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.description.errors %}
+                            <span> - {{ error }}</span>
+                            {% endfor %}
+                        </div>
+
+                        {% else %}
+
+                        {{ form.description(class='form-control',
+                        id='floatingdescription',placeholder="name@example.com",style="height:200px")
+                        }}
+
+                        {% endif %}
+
+                        {{ form.description.label(for="floatingdescription") }}
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="form-floating mb-3">
+
+                                {% if form.price.errors %}
+
+                                {{ form.price(class='form-control is-invalid',
+                                id='floatingprice',placeholder="name@example.com") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.price.errors %}
+                                    <span> - {{ error }}</span>
+                                    {% endfor %}
+                                </div>
+
+                                {% else %}
+
+                                {{ form.price(class='form-control', id='floatingprice',placeholder="name@example.com")
+                                }}
+
+                                {% endif %}
+
+                                {{ form.price.label(for="floatingprice") }}
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-floating mb-3">
+
+                                {% if form.brand.errors %}
+
+                                {{ form.brand(class='form-control is-invalid',
+                                id='floatingbrand',placeholder="name@example.com") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.brand.errors %}
+                                    <span> - {{ error }}</span>
+                                    {% endfor %}
+                                </div>
+
+                                {% else %}
+
+                                {{ form.brand(class='form-control', id='floatingbrand',placeholder="name@example.com")
+                                }}
+
+                                {% endif %}
+
+                                {{ form.brand.label(for="floatingbrand") }}
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-floating mb-3">
+
+                                {% if form.category.errors %}
+
+                                {{ form.category(class='form-control is-invalid',
+                                id='floatingcategory',placeholder="name@example.com") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.category.errors %}
+                                    <span> - {{ error }}</span>
+                                    {% endfor %}
+                                </div>
+
+                                {% else %}
+
+                                {{ form.category(class='form-control',
+                                id='floatingcategory',placeholder="name@example.com")
+                                }}
+
+                                {% endif %}
+
+                                {{ form.category.label(for="floatingcategory") }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 mb-3">
+                        {{ form.image.label(class='form-label', for="fileInput") }} <br>
+                        {{ form.image(class='form-control', id='fileInput')}}
+                        {% if form.image.errors %}
+                        {% for error in form.image.errors %}
+                        <span class="text-danger"> - {{ error }}</span><br>
+                        {% endfor %}
+
+                        {% endif %}
+                    </div>
+                </fieldset>
+                {{ form.submit(class='btn btn-info container', style='margin-top:20px;margin-bottom:20px') }}
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

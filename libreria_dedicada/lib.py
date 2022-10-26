@@ -1,8 +1,5 @@
 from typing import Union
 from google.cloud import bigquery
-import os
-
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "credentials.json"
 
 bq = bigquery.Client()
 
@@ -33,11 +30,15 @@ tables = [
     "ToolsAndHomeImprovement",
     "ToysAndGames",
     "VideoGames",
+    "metaLORD",
 ]
 
 
 def get_table_data(
-    table_id: Union[int, str], limit: int = 10, return_mode: Union[str, int] = "df"
+    table_id: Union[int, str],
+    columns: list[str] = "*",
+    limit: int = 10,
+    return_mode: Union[str, int] = "df",
 ):
 
     """
@@ -67,20 +68,27 @@ def get_table_data(
         table = table_lay.format(table_id)
 
     result = (
-        bq.query(f"SELECT * FROM `{table}` LIMIT {limit}").to_dataframe().fillna("N/A")
+        bq.query(f"SELECT {', '.join(columns)} FROM `{table}` LIMIT {limit}")
+        .to_dataframe()
+        .fillna("N/A")
     )
 
-    if return_mode == 0 or return_mode == "df":
-        return result
-    elif return_mode == 1 or return_mode == "dict":
-        return result.to_dict("records")
+    try:
+        if return_mode == 0 or return_mode == "df":
+            return result
+        elif return_mode == 1 or return_mode == "dict":
+            return result.to_dict("records")
+    except:
+        return None
 
 
 def get_data_where(
     table_id: Union[int, str],
     where: dict,
+    first: bool = False,
+    columns: Union[str, list[str]] = "*",
     comparison: str = "=",
-    where_mode: str = "&",
+    where_mode: str = "AND",
     limit: int = 10,
     return_mode: Union[str, int] = "df",
 ):
@@ -130,11 +138,21 @@ def get_data_where(
 
     if not " " in where_mode:
         FILTER = f" {where_mode} ".join(
-            [f"{key} {comparison} '{value}'" for key, value in where.items()]
+            [
+                f"{key} {comparison} {value}"
+                if type(value) == int or type(value) == float
+                else f"{key} {comparison} '{value}'"
+                for key, value in where.items()
+            ]
         )
     else:
         FILTER = where_mode.join(
-            [f"{key} {comparison} '{value}'" for key, value in where.items()]
+            [
+                f"{key} {comparison} {value}"
+                if type(value) == int or type(value) == float
+                else f"{key} {comparison} '{value}'"
+                for key, value in where.items()
+            ]
         )
 
     if type(table_id) == int:
@@ -142,16 +160,25 @@ def get_data_where(
     else:
         table = table_lay.format(table_id)
 
-    result = (
-        bq.query(f"SELECT * FROM `{table}` WHERE {FILTER} LIMIT {limit}")
-        .to_dataframe()
-        .fillna("N/A")
-    )
+    query = f"SELECT {', '.join(columns)} FROM `{table}` WHERE {FILTER} LIMIT {limit}"
 
-    if return_mode == 0 or return_mode == "df":
-        return result
-    elif return_mode == 1 or return_mode == "dict":
-        return result.to_dict("records")
+    print("Sending query:", query)
+
+    result = bq.query(query).to_dataframe().fillna("N/A")
+
+    print("Query sent, returning answer...")
+
+    try:
+        if return_mode == 0 or return_mode == "df":
+            if first:
+                return result.head(1)
+            return result
+        elif return_mode == 1 or return_mode == "dict":
+            if first:
+                return result.to_dict("records")[0]
+            return result.to_dict("records")
+    except:
+        return None
 
 
 def get_custom_query(query, return_mode: Union[str, int] = "df"):
@@ -179,14 +206,59 @@ def get_custom_query(query, return_mode: Union[str, int] = "df"):
 
     result = bq.query(query).to_dataframe().fillna("N/A")
 
-    if return_mode == 0 or return_mode == "df":
-        return result
-    elif return_mode == 1 or return_mode == "dict":
-        return result.to_dict("records")
+    try:
+        if return_mode == 0 or return_mode == "df":
+            return result
+        elif return_mode == 1 or return_mode == "dict":
+            return result.to_dict("records")
+    except:
+        return None
+
+
+def insert_data(table_id: Union[int, str], data: Union[dict, list[dict]]):
+    if type(table_id) == int:
+        table = table_lay.format(tables[table_id])
+    else:
+        table = table_lay.format(table_id)
+
+    try:
+        if bq.insert_rows_json(table, data) == []:
+
+            return True
+
+        return False
+    except:
+        return None
 
 
 def get_tables():
     """
     Retorna las tablas en formato de lista.
+
+    0. AmazonInstantVideo
+    1. AndroidApps
+    2. Automotive
+    3. Baby
+    4. Beauty
+    5. Books
+    6. CDandVinyl
+    7. CellphonesAndAccessories
+    8. ClothingAndShoesAndJewerly
+    9. Digital_Music
+    10. Electronics
+    11. GroceryAndGourmetFood
+    12. HealthAndPersonalCare
+    13. Home_and_Kitchen
+    14. KindleStore
+    16. MoviesAndTV
+    17. MusicalInstruments
+    18. Office_Products
+    19. PatioLawnGarden
+    20. PetSupplies
+    21. SportsAndOutdoors
+    22. ToolsAndHomeImprovement
+    23. ToysAndGames
+    24. VideoGames
+    25. metaLORD
     """
     return tables

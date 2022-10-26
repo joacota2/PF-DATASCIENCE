@@ -1,0 +1,213 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="col m-3">
+    <div class="row m-1">
+        <div class="card shadow-sm col-6 m-1" style="border: none;">
+            <div class="card-body">
+                <form action="" method="post">
+                    {{ form.hidden_tag() }}
+                    <fieldset class="form-group">
+                        <h4 class="card-title mb-3"><i class="bi bi-signpost-2 me-2"></i>Billing address</h4>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-floating mb-3">
+
+                                    {{ form.first_name(class='form-control',
+                                    id='floatingFirstName',placeholder="name@example.com",style='white-space:nowrap;overflow:
+                                    hidden;text-overflow:ellipsis')
+                                    }}
+
+                                    {{ form.first_name.label(for="floatingFirstName") }}
+
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-floating mb-3">
+
+                                    {{ form.last_name(class='form-control',
+                                    id='floatingLastName',placeholder="name@example.com",style='white-space:nowrap;overflow:
+                                    hidden;text-overflow:ellipsis')
+                                    }}
+
+                                    {{ form.last_name.label(for="floatingLastName") }}
+
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-floating mb-3">
+
+                                    {{ form.email(class='form-control',
+                                    id='floatingEmail',placeholder="name@example.com",disabled=True,value=current_user.email,style='white-space:nowrap;overflow:
+                                    hidden;text-overflow:ellipsis')
+                                    }}
+
+                                    {{ form.email.label(for="floatingEmail") }}
+
+                                </div>
+                            </div>
+                            <div class="col-6"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-floating mb-3">
+
+                                    {{ form.street(class='form-control',
+                                    id='floatingStreet',placeholder="name@example.com",disabled=True)
+                                    }}
+
+                                    {{ form.street.label(for="floatingStreet") }}
+
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-floating mb-3">
+
+                                    {{ form.address(class='form-control',
+                                    id='floatingAddress',placeholder="name@example.com",disabled=True)
+                                    }}
+
+                                    {{ form.address.label(for="floatingAddress") }}
+
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-floating mb-3">
+
+                                    {{ form.address2(class='form-control',
+                                    id='floatingAddress2',placeholder="name@example.com",disabled=True)
+                                    }}
+
+                                    {{ form.address2.label(for="floatingAddress2") }}
+
+                                </div>
+                            </div>
+                            <div class="col-6"></div>
+                            <div class="col-6">
+                                <div class="form-floating mb-3">
+
+                                    {{ form.country(class='form-control',
+                                    id='floatingCountry',placeholder="name@example.com",disabled=True)
+                                    }}
+
+                                    {{ form.country.label(for="floatingCountry") }}
+
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-floating mb-3">
+
+                                    {{ form.state_city(class='form-control',
+                                    id='floatingStateCity',placeholder="name@example.com",disabled=True)
+                                    }}
+
+                                    {{ form.state_city.label(for="floatingStateCity") }}
+
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-floating mb-3">
+
+                                    {{ form.zip_code(class='form-control',
+                                    id='floatingZipCode',placeholder="name@example.com",disabled=True)
+                                    }}
+
+                                    {{ form.zip_code.label(for="floatingZipCode") }}
+
+                                </div>
+                            </div>
+                            <div class="col-6"></div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <h4 class="card-title mb-3 d-flex justify-content-between">
+                                <div>
+                                    <i class="bi bi-credit-card-2-front me-2"></i>Payment
+                                </div>
+                                <img src="{{ url_for('static', filename='card_logos.png') }}" alt=""
+                                    style="width:100px">
+                            </h4>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-floating mb-3">
+
+                                    {{ form.card_number(class='form-control',
+                                    id='floatingCardNumber',placeholder="name@example.com",disabled=True)
+                                    }}
+
+                                    {{ form.card_number.label(for="floatingCardNumber") }}
+
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-floating mb-3">
+
+                                    {{ form.full_name(class='form-control',
+                                    id='floatingFullName',placeholder="name@example.com",disabled=True)
+                                    }}
+
+                                    {{ form.full_name.label(for="floatingFullName") }}
+
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-floating mb-3">
+
+                                    {{ form.expiration(class='form-control',
+                                    id='floatingExpiration',placeholder="name@example.com",disabled=True)
+                                    }}
+
+                                    {{ form.expiration.label(for="floatingExpiration") }}
+
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-floating mb-3">
+
+                                    {{ form.cvv(class='form-control',
+                                    id='floatingCVV',placeholder="name@example.com",disabled=True)
+                                    }}
+
+                                    {{ form.cvv.label(for="floatingCVV") }}
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col"></div>
+                        {{ form.submit(class='btn btn-dark container col-4') }}
+                        <div class="col"></div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+        <div class="col-5 m-1 mt-3">
+            <div class="card-body">
+                <h3 class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="text-dark"><i class="bi bi-cart-fill me-2"></i>Your cart</span>
+                    <span class="badge rounded-pill" style="background:black">1</span>
+                </h3>
+                <ul class="list-group shadow-sm" style="border: none;">
+                    <li class="list-group-item d-flex justify-content-between" style="border:none">
+                        <div>
+                            <h6 class="my-0 col d-inline-block text-truncate" style="max-width: 400px;">
+                                {{product.title}}</h6>
+                        </div>
+                        <span class="text-muted">${{int(product.price)}}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between" style="border: none;">
+                        <div class="text-success">
+                            <h6 class="my-0 text-success">Promo code</h6>
+                            <small>AMAZINGSTORE</small>
+                        </div>
+                        <span class="text-success">-$5</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between" style="border: none;">
+                        <span><strong>Total (USD)</strong></span>
+                        <strong>${{int(product.price)-5}}</strong>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

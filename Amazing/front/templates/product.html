@@ -1,0 +1,291 @@
+{% extends 'base.html' %}
+{% block content %}
+<div>
+    <div class="row m-1 align-items-center" style="border:none">
+        <!-- Main product -->
+        <div class="row card-group m-1">
+            <div class="card shadow-sm col-6 align-items-center ml-1" style="height:600px;border:none">
+                <center><img class="card-img-top" src="{{ product.imUrl }}"
+                        style="height:600px;object-fit:cover;object-position:center">
+                </center>
+            </div>
+            <div class="card shadow-sm col-6 mr-1" style="height: 600px; border:none">
+                <div class="card-body">
+                    <h3 class="card-title">{{ product.title }}</h3>
+                    <p class="card-text text-muted">{{ product.category }}</p>
+                    {% if product.description == "N/A" %}
+                    <p class="card-text">No description
+                        available.</p>
+                    {% else %}
+                    <p class="card-text" style="height: 250px;overflow:auto">{{
+                        product.description }}</p>
+                    {% endif %}
+                    {% if discount %}
+                    <h3 class="card-title">
+                        <h3 class="text-muted text-decoration-line-through">${{ int(product.price) }}</h3>
+                        {% set real_discount = (100-discount)/100 %}
+                        <h3>${{ int(int(product.price)*real_discount) }} (-{{discount}}%)</h3>
+                    </h3>
+                    {% else %}
+                    <h3 class="card-title">${{ int(product.price) }}</h3>
+                    {% endif %}
+                </div>
+                <div class="card-footer" style="border: none; background:white">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <!-- Buy -->
+                        <a href="/loading/product/{{ product.asin }}/checkout" class="btn btn-dark card-link">Buy
+                            now</a>
+                        <div class="btn-group">
+                            <!-- Add to cart -->
+                            {% if product.asin in current_user.cart|map(attribute='asin')|list %}
+                            <button onclick="add2cart('{{ product.asin }}')" class="btn btn-sm btn-dark"
+                                id="cart-button-{{ product.asin }}">Remove
+                                from
+                                cart</button>
+                            {% else %}
+                            <button onclick="add2cart('{{ product.asin }}')" class="btn btn-sm btn-outline-dark"
+                                id="cart-button-{{ product.asin }}">Add
+                                to cart</button>
+                            {% endif %}
+                            <!-- Add to favs -->
+                            {% if product.asin in current_user.favorites|map(attribute='asin')|list %}
+                            <button onclick="add2favs('{{ product.asin }}')" class="btn btn-sm btn-warning"
+                                id="fav-button-{{ product.asin }}">Remove
+                                from
+                                favorites</button>
+                            {% else %}
+                            <button onclick="add2favs('{{ product.asin }}')" class="btn btn-sm btn-outline-warning"
+                                id="fav-button-{{ product.asin }}">Add
+                                to favorites</button>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Recommendations -->
+        <div class="row m-1">
+            <div class="card shadow-sm col m-1 text-center" style="border:none">
+                <div class="card-body">
+                    <h1 class="card-title">Look at these other products</h1>
+                </div>
+            </div>
+        </div>
+        <div class="row m-1">
+            {% if also_bought %}
+            {% for prod in also_bought %}
+            <div class="card shadow-sm col m-1" style="border:none">
+                <center><img src="{{ prod.imUrl }}" class='card-img-top'
+                        style="height:400px;object-fit:cover;object-position:center"></center>
+                <div class="card-body">
+                    <h6 class="card-title text-truncate">{{ prod.title }}</h6>
+                    <p class="card-text">{{ prod.category }}</p>
+                    {% if prod.description == "N/A" %}
+                    <p class="card-text text-truncate text-muted">No description available.</p>
+                    {% else %}
+                    <p class="card-text text-truncate text-muted">{{ prod.description }}</p>
+                    {% endif %}
+                    <a href="/loading/product/{{ prod.asin }}" class="card-link btn btn-outline-dark">Take a look</a>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <div class="card shadow-sm col m-1 text-center" style="border:none">
+                <div class="card-body">
+                    <p class="m-1 text-center text-muted">There's no recommendations to show right now.
+                    </p>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        <!-- Post review -->
+        <div class="row m-1">
+            <div class="card shadow-sm col m-1 text-center" style="border:none">
+                <div class="card-body">
+                    <h1 class="card-title">Post a review</h1>
+                </div>
+            </div>
+        </div>
+        <div class="row m-1">
+            <form method="POST" class="card shadow-sm col m-1" style="border:none">
+                {{ form.hidden_tag() }}
+                <div class="card-body">
+                    <fieldset class="form-group">
+                        <div class="form-floating mb-3 mt-2">
+
+                            {% if form.summary.errors %}
+
+                            {{ form.summary(class='form-control is-invalid',
+                            id='floatingSummary',placeholder="name@example.com") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.summary.errors %}
+                                <span> - {{ error }}</span>
+                                {% endfor %}
+                            </div>
+
+                            {% else %}
+
+                            {{ form.summary(class='form-control',
+                            id='floatingSummary',placeholder="name@example.com") }}
+
+                            {% endif %}
+
+                            {{ form.summary.label(for="floatingSummary") }}
+                        </div>
+                        <div class="form-floating mb-3">
+
+                            {% if form.content.errors %}
+
+                            {{ form.content(class='form-control is-invalid',
+                            id='floatingContent',placeholder="name@example.com",style="height:200px") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.content.errors %}
+                                <span> - {{ error }}</span>
+                                {% endfor %}
+                            </div>
+
+                            {% else %}
+
+                            {{ form.content(class='form-control',
+                            id='floatingContent',placeholder="name@example.com",style="height:200px") }}
+
+                            {% endif %}
+
+                            {{ form.content.label(for="floatingContent") }}
+                        </div>
+                        <div class="form-floating mb-3">
+
+                            {% if form.overall.errors %}
+
+                            {{ form.overall(class='form-control is-invalid',
+                            id='floatingOverall',placeholder="name@example.com") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.overall.errors %}
+                                <span> - {{ error }}</span>
+                                {% endfor %}
+                            </div>
+
+                            {% else %}
+
+                            {{ form.overall(class='form-control',
+                            id='floatingOverall',placeholder="name@example.com") }}
+
+                            {% endif %}
+
+                            {{ form.overall.label(for="floatingOverall") }}
+                        </div>
+                        <div class="row">
+                            <div class="col"></div>
+                            {{ form.submit(class='btn btn-dark col-6 mb-2') }}
+                            <div class="col"></div>
+                        </div>
+                    </fieldset>
+                </div>
+            </form>
+        </div>
+        <!-- All reviews -->
+        <div class="row m-1">
+            <div class="card shadow-sm col m-1 text-center" style="border:none">
+                <div class="card-body">
+                    <h1 class="card-title">What other users think</h1>
+                </div>
+            </div>
+        </div>
+        <div class="row m-1">
+            {% if reviews.items %}
+            <div class="col m-1">
+                {% for review in reviews %}
+                <div class="card shadow-sm row mb-3" style="border:none">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h3 class="card-title">{{ review.summary }}</h3>
+                            <p class="text-muted">{{ review.Date }}</p>
+                        </div>
+                        {% set help = listify(review.helpful) %}
+                        {% set stars = overall_stars(review.overall) %}
+                        <h3 class="card-title" style="color:#ff9900">
+                            {{ stars }}
+                        </h3>
+                        <blockquote class="blockquote">
+                            <p>{{ review.reviewText }}</p>
+                            <footer class="blockquote-footer">{{ review.reviewerName }}</footer>
+                        </blockquote>
+
+                    </div>
+                    <div class="card-footer" style="background: white;border:none">
+                        {% if current_user.id in review.helpful_users|map(attribute='user_id')|list %}
+                        <button class="card-link btn btn-success" id="helpful-button-{{review.id}}"
+                            onclick="helpful('{{ review.id }}')">
+                            <i class="bi bi-hand-thumbs-up-fill"></i>
+                            <span id="helpful-{{review.id}}">{{
+                                (listify(review.helpful)[0])+(review.helpful_users|length)
+                                }}</span>
+                        </button>
+                        {% else %}
+                        <button class="card-link btn btn-outline-success" id="helpful-button-{{review.id}}"
+                            onclick="helpful('{{ review.id }}')">
+                            <i class="bi bi-hand-thumbs-up-fill"></i>
+                            <span id="helpful-{{review.id}}">{{
+                                (listify(review.helpful)[0])+(review.helpful_users|length)
+                                }}</span>
+                        </button>
+                        {% endif %}
+                        {% if current_user.id in review.not_helpful_users|map(attribute='user_id')|list %}
+                        <button class="card-link btn btn-danger" id="unhelpful-button-{{review.id}}"
+                            onclick="nothelpful('{{ review.id }}')">
+                            <i class="bi bi-hand-thumbs-down-fill"></i>
+                            <span id="unhelpful-{{review.id}}">{{
+                                (listify(review.helpful)[1])+(review.not_helpful_users|length)
+                                }}</span>
+                        </button>
+                        {% else %}
+                        <button class="card-link btn btn-outline-danger" id="unhelpful-button-{{review.id}}"
+                            onclick="nothelpful('{{ review.id }}')">
+                            <i class="bi bi-hand-thumbs-down-fill"></i>
+                            <span id="unhelpful-{{review.id}}">{{
+                                (listify(review.helpful)[1])+(review.not_helpful_users|length)
+                                }}</span>
+                        </button>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="card shadow-sm col m-1 text-center" style="border:none">
+                <div class="card-body">
+                    <p class="m-1 text-center text-muted">There's no reviews to show right now.
+                    </p>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        <!-- Page selector -->
+        {% if reviews.items %}
+        <div class="col"></div>
+        <div class="col-6 d-flex justify-content-center">
+            <div class="m-1 btn-group" role="group">
+                {% if reviews.page != 1 %}
+                <a href="/loading/product/{{product.asin}}?page={{reviews.page-1}}" class="btn btn-outline-dark"><i
+                        class="bi bi-arrow-left"></i></a>
+                {% endif %}
+                {% for page_num in reviews.iter_pages(left_edge=1,right_edge=1,left_current=1,right_current=1) %}
+                {% if page_num %}
+                {% if reviews.page == page_num %}
+                <a href="/loading/product/{{product.asin}}?page={{page_num}}" class="btn btn-dark">{{page_num}}</a>
+
+                {% else %}
+                <a href="/loading/product/{{product.asin}}?page={{page_num}}"
+                    class="btn btn-outline-dark">{{page_num}}</a>
+
+                {% endif %}
+                {% endif %}
+                {% endfor %}
+                <a href="/loading/product/{{product.asin}}?page={{reviews.page+1}}" class="btn btn-outline-dark"><i
+                        class="bi bi-arrow-right"></i></a>
+            </div>
+        </div>
+        <div class="col"></div>
+        {% endif %}
+    </div>
+    {% endblock %}

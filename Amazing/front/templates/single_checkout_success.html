@@ -1,0 +1,47 @@
+<!-- TODO -->
+{% extends 'base.html' %}
+{% block content %}
+<div class="row m-3 align-items-center">
+    <div class="col-7">
+        <h1 class="text-dark">Thank you for your purchase</h1>
+        <p class="lead">We're processing it now. You will receive an email confirmation shortly.</p>
+        <p class="lead">Your order number is <strong>W123456U1Y8</strong></p>
+        <h4 class="text-dark">Order summary:</h4>
+        <div class="card" style="border:none ;">
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Product</th>
+                            <th scope="col">Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <td class="my-0 col d-inline-block text-truncate" style="width: 500px;">
+                            {{ product.title }}</td>
+                        <td>${{ int(product.price) }}</td>
+                    </tbody>
+                    <tbody>
+                        <td class="text-success" style="max-width: 400px;"><strong>AMAZINGSTORE</strong></td>
+                        <td class="text-success"><strong>-$5</strong></td>
+                    </tbody>
+                    <tbody>
+                        <td style="width: 500px;"><strong>ESTIMATED TOTAL</strong></td>
+                        {% set total = int(product.price)-5 %}
+                        {% if total <= 3 %} <td><strong>$3</strong></td>
+                            {% else %}
+                            <td><strong>${{total}}</strong></td>
+                            {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <a class="btn btn-lg btn-dark mt-5 col-4" href="{{ url_for('store.catalog') }}">Continue
+            buying</a>
+    </div>
+    <div class="col-5">
+        <img src="{{ url_for('static',filename='mail.gif') }}" alt=""
+            style="filter:grayscale(100%); mix-blend-mode:multiply;width:400px;margin-left: 100px; margin-top:100px">
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="content-section">
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <div class="col-lg-4">
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Login</legend>
+                <div class="form-floating mb-3">
+
+                    {% if form.email.errors %}
+
+                    {{ form.email(class='form-control is-invalid', id='floatingEmail',placeholder="name@example.com") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.email.errors %}
+                        <span> - {{ error }}</span>
+                        {% endfor %}
+                    </div>
+
+                    {% else %}
+
+                    {{ form.email(class='form-control', id='floatingEmail',placeholder="name@example.com") }}
+
+                    {% endif %}
+
+                    {{ form.email.label(for="floatingEmail") }}
+                </div>
+                <div class="form-floating mb-3">
+
+                    {% if form.password.errors %}
+
+                    {{ form.password(class='form-control is-invalid',
+                    id='floatingPassword',placeholder="name@example.com") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.password.errors %}
+                        <span> - {{ error }}</span>
+                        {% endfor %}
+                    </div>
+
+                    {% else %}
+
+                    {{ form.password(class='form-control', id='floatingPassword',placeholder="name@example.com") }}
+
+                    {% endif %}
+
+                    {{ form.password.label(for="floatingPassword") }}
+                </div>
+                <div class="form-group">
+                    {{ form.remember(class='form-check-input') }}
+                    {{ form.remember.label(class='form-check-label') }}
+                </div>
+            </fieldset>
+            {{ form.submit(class='btn btn-info container', style='margin-top:20px;margin-bottom:20px') }}
+            <a href="{{ url_for('main.loading',destination='register') }}"
+                class="btn btn-outline-info container">Register</a>
+        </div>
+    </form>
+</div>
+<div class="border-top pt-3">
+    <small class="text-muted">
+        <a class="ml-2" href="{{ url_for('main.loading',destination='reset_password') }}">Forgot your password?</a>
+    </small>
+</div>
+{% endblock %}
