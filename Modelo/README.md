@@ -1,2 +1,2 @@
- ![The website](image.jpg)
+ ![The website](https://i.imgur.com/OSCUioF.png)
  
