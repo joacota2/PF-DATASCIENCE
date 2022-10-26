@@ -25,7 +25,7 @@ On **modelo.ipynb** there´s a description of the work on analysis, training, ev
 * Expanded the column salesRank {'category': rank}.
 * Expanded the column related to also_bought, also_viewed, buy_after_viewing, bought_together.
 
-## Carga:
+## Load:
 
 1. Partitioned the tables to chunks of 1.000.000 rows.
 2. Load those to  BigQuery using pandas .to_gbq.
