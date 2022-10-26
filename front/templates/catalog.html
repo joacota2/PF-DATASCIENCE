@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static',filename='main.css') }}">
+<div class="m-3">
+    <div class="row m-1">
+        <div class="col"></div>
+        <div class="card col-6 shadow-sm m-1 mb-3" style="border:none">
+            <div class="card-body">
+                <h1 class="account-heading text-center">Catalog</h2>
+            </div>
+        </div>
+        <div class="col"></div>
+        <div class="m-1">
+            <div class="card-body mr-1">
+                <div class="row row-cols-3">
+                    {% for product in products.items %}
+                    <div class="col-4" id="{{product.asin}}">
+                        <div class="card shadow-sm mb-4" style="border:none">
+                            <a href="/loading/product/{{ product.asin }}" style="text-decoration:none;color:#212121">
+                                <center><img src="{{ product.imUrl }}" class='card-img-top'
+                                        style="height:400px;object-fit:cover;object-position:center">
+                                </center>
+                            </a>
+                            <div class="card-body">
+                                <h5 class="card-title text-truncate"><a href="/loading/product/{{ product.asin }}"
+                                        style="text-decoration:none;color:#212121">{{
+                                        product.title }}</a></h5>
+                                <!-- Info -->
+                                <h6 class="card-subtitle text-muted">{{ product.category }}</h6>
+                                {% if product.description == "N/A" %}
+                                <p class="card-text text-truncate">No description available.</p>
+                                {% else %}
+                                <p class="card-text text-truncate">{{ product.description }}</p>
+                                {% endif %}
+                                <!-- Buttons -->
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <!-- Buy -->
+                                    <a href="/loading/product/{{ product.asin }}" class="btn btn-dark card-link">Buy</a>
+                                    <div class="btn-group">
+                                        <!-- Add to cart -->
+                                        {% if product.asin in current_user.cart|map(attribute='asin')|list %}
+                                        <button onclick="add2cart('{{ product.asin }}')" class="btn btn-sm btn-dark"
+                                            id="cart-button-{{ product.asin }}">Remove
+                                            from
+                                            cart</button>
+                                        {% else %}
+                                        <button onclick="add2cart('{{ product.asin }}')"
+                                            class="btn btn-sm btn-outline-dark" id="cart-button-{{ product.asin }}">Add
+                                            to cart</button>
+                                        {% endif %}
+                                        <!-- Add to favs -->
+                                        {% if product.asin in current_user.favorites|map(attribute='asin')|list %}
+                                        <button onclick="add2favs('{{ product.asin }}')" class="btn btn-sm"
+                                            id="fav-button-{{ product.asin }}">Remove
+                                            from
+                                            favorites</button>
+                                        {% else %}
+                                        <button onclick="add2favs('{{ product.asin }}')"
+                                            class="btn btn-sm btn-outline-warning"
+                                            id="fav-button-{{ product.asin }}">Add
+                                            to favorites</button>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="col"></div>
+        <div class="col-6 d-flex justify-content-center">
+            <div class="m-1 btn-group" role="group">
+                {% if products.page != 1 %}
+                <a href="{{ url_for('store.catalog',page=products.page-1) }}" class="btn btn-outline-dark"><i
+                        class="bi bi-arrow-left"></i></a>
+                {% endif %}
+                {% for page_num in products.iter_pages(left_edge=1,right_edge=1,left_current=1,right_current=1) %}
+                {% if page_num %}
+                {% if products.page == page_num %}
+                <a href="{{ url_for('store.catalog',page=page_num) }}" class="btn btn-dark">{{page_num}}</a>
+
+                {% else %}
+                <a href=" {{ url_for('store.catalog',page=page_num) }}" class="btn btn-outline-dark">{{page_num}}</a>
+
+                {% endif %}
+                {% endif %}
+                {% endfor %}
+                <a href="{{ url_for('store.catalog',page=products.page+1) }}" class="btn btn-outline-dark"><i
+                        class="bi bi-arrow-right"></i></a>
+            </div>
+        </div>
+        <div class="col"></div>
+    </div>
+</div>
+{% endblock %}

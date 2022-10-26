@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    {% if title %}
+    <title>{{ title }} - Amazing</title>
+    {% else %}
+    <title>Amazing</title>
+    {% endif %}
+</head>
+
+<header class="p-3 text-bg-dark sticky-top">
+    <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                <a href="{{ url_for('main.loading',destination='home') }}"
+                    class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+                    <img style="height: 30px;object-position:center"
+                        src="{{ url_for('static', filename='amazon-logo-light-transparent.png') }}">
+                </a>
+            </a>
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-md-0 justify-content-center">
+                <li><a href="{{url_for('main.loading', destination='home')}}" class="nav-link px-2 text-white"><i
+                            class="bi bi-house-fill me-1"></i>Home</a></li>
+                <li>
+                    <div class="vr" style="height: 40px;"></div>
+                </li>
+                <li><a href="{{ url_for('main.loading', destination='discounts') }}" class="nav-link px-2 text-white"><i
+                            class="bi bi-percent me-1"></i>Discounts
+                        <span class="badge" style="background:#ff9900">New</span></a>
+                </li>
+                <li>
+                    <div class="vr" style="height: 40px;"></div>
+                </li>
+                <li><a href="{{ url_for('main.loading', destination='catalog')}}" class="nav-link px-2 text-white"><i
+                            class="bi bi-book-half me-1"></i>Catalog</a></li>
+                <li>
+                    <div class="vr" style="height: 40px;"></div>
+                </li>
+                <li>
+                    <div class="dropdown">
+                        <a href="#" class="nav-link d-flex link-light text-decoration-none dropdown-toggle"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-tags-fill me-1"></i>Categories
+                        </a>
+                        </a>
+                        <ul class="dropdown-menu text-small shadow-sm dropdown-menu-dark overflow-auto"
+                            style="height: 500px;">
+                            {% for category in db_categories %}
+                            {% set cat = category.category.replace('amp;','').replace(' ','_')|lower|title %}
+                            {% if cat == 'Video_games' %}
+                            {% set cat = 'Videogames' %}
+                            {% elif cat == 'Cell_phones_&_accessories' %}
+                            {% set cat = 'Cellphones_&_accesories' %}
+                            {% endif %}
+                            {% set cat_url = category.category.replace("amp;", "") %}
+                            <li><a class="dropdown-item sb col-2"
+                                    href="/loading/categories/{{cat_url}}">{{cat.replace('_',' ')}}</a>
+                            </li>
+                            <li>
+                                {% endfor %}
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <div class="vr" style="height: 40px;"></div>
+                </li>
+                <li><a href="/loading/about" class="nav-link px-2 text-white"><i
+                            class="bi bi-people-fill me-1"></i></i>About us</a></li>
+            </ul>
+            <div class="text-end">
+                {% if current_user.is_authenticated %}
+                <div class="dropdown">
+                    <a href="#" class="d-flex align-items-center link-light text-decoration-none dropdown-toggle"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="{{ url_for('static', filename='pfps/' + current_user.pfp) }}" width="32px"
+                            height="32px" class="rounded-circle me-2">
+                        <strong>{{ current_user.username }}</strong>
+                    </a>
+                    </a>
+                    <ul class="dropdown-menu text-small shadow-sm dropdown-menu-dark">
+                        <!-- <li>
+                            <a href="/loading/posts/new" class="dropdown-item sb"><i
+                                    class="bi bi-pencil-square me-1"></i>Post a product</a>
+                        </li> -->
+                        <!-- <hr class="dropdown-divider"> -->
+                        <li><a class="dropdown-item sb" href="/loading/profile"><i
+                                    class="bi bi-person-fill me-1"></i>Profile</a></li>
+                        <li><a class="dropdown-item sb" href="/loading/favorites"><i
+                                    class="bi bi-star-fill me-1"></i>Favorites<span class="badge ms-1"
+                                    style="background:#ff9900">{{ current_user.favorites|length }}</span></a></li>
+                        <li>
+                        <li><a class="dropdown-item sb" href="/loading/cart"><i
+                                    class="bi bi-cart-fill me-1"></i>Cart<span class="badge ms-1"
+                                    style="background:#ff9900">{{ current_user.cart|length }}</span></a></li>
+                        <!-- <hr class="dropdown-divider"> -->
+                        </li>
+                        <!-- <li><a class="dropdown-item sb" href="/loading/profile/posts"><i
+                                    class="bi bi-file-text-fill me-1"></i>Posts (WIP)</a></li> -->
+                        <li><a class="dropdown-item sb" href="/loading/profile/reviews"><i
+                                    class="bi bi-postcard-heart-fill me-1"></i>Reviews</a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item sb" href="/loading/logout"><i
+                                    class="bi bi-door-closed-fill me-1"></i>Logout</a></li>
+                    </ul>
+                </div>
+                {% else %}
+                <a href="{{ url_for('main.loading',destination='login') }}" class="btn btn-outline-light me-2">Login</a>
+                <a href="{{ url_for('main.loading',destination='register') }}" class="btn btn-light">Register</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</header>
+
+<body class="bg-light">
+    <main role="main" class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2/dist/js/bootstrap.min.js"
+        integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+        crossorigin="anonymous"></script>
+    <script type="text/javascript" src="{{ url_for('static',filename='functions.js') }}"></script>
+</body>
+
+</html>

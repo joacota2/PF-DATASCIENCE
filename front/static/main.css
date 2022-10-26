@@ -1,0 +1,12 @@
+img.glow {
+    animation: glow 0.8s infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        filter:opacity(1)
+    }
+    to {
+        filter: opacity(0.3);
+    }
+}
