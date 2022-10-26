@@ -39,7 +39,7 @@ Getting at the end subfiles in the CSVs folder:
 ![1666741984496](image/README/1666741984496.png)
 <hr>
 
-## 4. Basic ETL to Fragments
+## 4. Basic Transformation to Fragments
 
 The fragments are passed through a transformation stage, which consists of filling cells with null values ​​and separating the helpfull column into .
 
