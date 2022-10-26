@@ -1,4 +1,4 @@
-# # Pipeline: Download and Upload data
+# Pipeline: Download and Upload data
 
 In this section, the method applied to save the initial datasets in the selected database is disclosed. In this case we will use Google Cloud Storage services, which allow us to store information (datasets) in containers called buckets.
 <hr>
@@ -51,10 +51,10 @@ df = h.ReplaceNulls('./Datasets/CSVs/','Example.csv')
 # Spliting helpful and Creating Date Column
 df = h.helpfulAndDate('./Datasets/ETL/','Example.csv')
 ```
-Original Date:<br>
+Original Data:<br>
 ![1666743887915](image/README/1666743887915.png)
 
-Transformation:<br>
+Transformated Data:<br>
 ![1666743964876](image/README/1666743964876.png)
 <hr>
 
