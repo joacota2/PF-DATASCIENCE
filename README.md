@@ -6,9 +6,18 @@
 
 ## About the project:  
  
- Amazon, the American multinational that sells goods online, is looking for new strategies to increase their sales and keep up their dominant position on the market. Thus, they have decided to reach our services in order to fill that need with our experience and creativity.  
- 
+Amazon, the American multinational that sells goods online, is looking for new strategies to increase their sales and keep up their dominant position on the market. Thus, they have decided to reach our services in order to fill that need with our experience and creativity.  
+   
  ## Our mission:  
+ - Analize all the data from Amazon reviews and sales metadata.
+ - Understand and improve Amazon insights.
+ - Build the Data architecture from scratch (DataWarehouse, Pipelines, etc.)
+ - Create a Dashboard (executive oriented) with what´s needed to make decisions fast.
+ - Develop a Recomendation System with the objective of increasing their sales.
+ 
+ 
+ ## We go further..
+ On top of all that, we managed to recreate the store itself in order to perform an accurate demo of how our job performs
  
 
 
