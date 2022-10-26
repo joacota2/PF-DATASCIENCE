@@ -24,4 +24,9 @@ Amazon, the American multinational that sells goods online, is looking for new s
 
 
 ![The website](https://i.imgur.com/N0UCTIe.png)
+
+
+## Docs:
+-- ** Modelo/doc_english.md/ ** to read documentation on ETL and Recomendation System.
+
  
