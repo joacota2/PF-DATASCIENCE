@@ -41,7 +41,7 @@ Getting at the end subfiles in the CSVs folder:
 
 ## 4. Basic Transformation to Fragments
 
-The fragments are passed through a transformation stage, which consists of filling cells with null values ​​and separating the helpfull column into UsefulReviews and TotalReviews columns.
+The fragments are passed through a transformation stage, which consists of filling cells with null values ​​and separating the <b>helpfull</b> column into <b>UsefulReviews</b> and <b>TotalReviews columns</b>.
 
 This is done by iterating the following functions:<br>
 ```python
