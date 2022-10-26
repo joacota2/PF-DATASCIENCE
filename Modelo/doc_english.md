@@ -73,9 +73,9 @@ etl: https://numpy.org/doc/
 
 etl: https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_gbq.html
 
-analisis: https://matplotlib.org/stable/index.html
+analysis: https://matplotlib.org/stable/index.html
 
-modelado: https://scikit-learn.org/stable/
+modeling: https://scikit-learn.org/stable/
 
 may help:
 
