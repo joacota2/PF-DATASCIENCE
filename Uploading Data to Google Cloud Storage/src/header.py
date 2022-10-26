@@ -146,16 +146,23 @@ def upload_to_bucket(blob_name,file_path,bucket_name):
 
 types = [str, str, str, str, str, float, str, int, str]
 
-def ReplaceNulls(filepath,filename):
+def ReplaceNulls(filepath,filename,fileFormat):
     path = os.path.join(filepath,filename)
-    df = pd.read_csv(path)
+    if fileFormat == '.csv':
+        df = pd.read_csv(path)
+    else:
+        df = pd.read_json(path)
     for i in range(df.shape[1]):
         if (types[i] == str):
-            df.iloc[:,i] = df.iloc[:,i].fillna('sin dato')
+            df.iloc[:,i] = df.iloc[:,i].fillna('no data')
         elif (types[i] == float):
             df.iloc[:,i] = df.iloc[:,i].fillna(0.0)
         elif (types[i] == int):
             df.iloc[:,i] = df.iloc[:,i].fillna(0)
+    if fileFormat == '.csv': 
+        df.to_csv('./Datasets/ETL/{}'.format(filename),index=False)
+    else: 
+        df.to_json('./Datasets/ETL/{}'.format(filename))
     return(df)
 
 def helpfulAndDate(filepath,filename):
