@@ -5,6 +5,12 @@
 
 
 ## About the project:  
+ 
+ Amazon, the American multinational that sells goods online, is looking for new strategies to increase their sales and keep up their dominant position on the market. Thus, they have decided to reach our services in order to fill that need with our experience and creativity.  
+ 
+ ## Our mission:  
+ 
+
 
 
 
