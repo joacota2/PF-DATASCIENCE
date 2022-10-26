@@ -37,7 +37,7 @@ Obteniendo al final subarchivos en la carpeta CSVs:
 
 ## 4. Transformación básica a los fragmentos
 
-Los fragmentos son pasados por una etapa de transformación, la cual consiste en rellenar celdas con valores nulos y la separación de la columna helpfull en .
+Los fragmentos pasan por una etapa de transformación, que consiste en llenar celdas con valores nulos y separar la columna <b>helpful</b> en columnas <b>UsefulReviews</b> y <b>TotalReviews</b>.
 
 Esto se realiza iterando las siguientes funciones:<br>
 ```python
