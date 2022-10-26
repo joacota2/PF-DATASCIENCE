@@ -9,7 +9,7 @@ from google.cloud import storage
 
 # Download files from an url
 print('='*60,'\n Downloading Files\n','='*60)
-for i in range(15): # Change to obtain all files: for i in range(len(h.filenames)):
+for i in range(5): # Change to obtain all files: for i in range(len(h.filenames)):
     URL = h.urls[i]
     response = requests.get(URL)
     open("./Datasets/Downloads/{}.json.gz".format(h.filenames[i]), "wb").write(response.content)
@@ -22,7 +22,7 @@ print(onlyfiles)
 print('='*60,'\n Chunking Files\n','='*60)
 for i in range(len(onlyfiles)):
     if(onlyfiles[i]!='.gitkeep'):
-        h.getChunkDF('./Datasets/Downloads/',onlyfiles[i],500000,type = '.csv')
+        h.getChunkDF('./Datasets/Downloads/',onlyfiles[i],500000,type = '.json')
         print(onlyfiles[i],'Chunked!')
 
 # Listing files to Replace Nulls

@@ -95,7 +95,7 @@ def save_partition(filename,df,chunksnum,type):
     if type == '.csv':
         dfout.to_csv('./Datasets/CSVs/{}_{}{}'.format(filename.replace('.json.gz',''),chunksnum,type),index=False,sep=',')
     else: 
-        dfout.to_json('./{}_{}{}'.format(filename.replace('.json.gz',''),chunksnum,'.json'),index=False)
+        dfout.to_json(path_or_buf='./Datasets/CSVs/{}_{}{}'.format(filename.replace('.json.gz',''),chunksnum,'.json'))
     return(True)
 
 def getChunkDF(filepath,filename,chunklen,type='.csv'):
