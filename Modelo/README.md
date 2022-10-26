@@ -1,2 +1,2 @@
- ![The website](https://i.imgur.com/OSCUioF.png)
+ ![The website](https://i.imgur.com/N0UCTIe.png)
  
