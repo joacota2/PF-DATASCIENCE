@@ -1,5 +1,9 @@
+from random import randint
 from flask import Blueprint, render_template
 from flask_login import current_user
+
+from front.models import UsersRecommendations
+from front import db
 
 main = Blueprint("main", __name__)
 
@@ -13,7 +17,18 @@ def loading(destination):
 @main.get("/")
 @main.get("/home")
 def home():
-    return render_template("home.html")
+    max_recom = 8
+    recommendations = (
+        UsersRecommendations.query.offset(
+            randint(1, UsersRecommendations.query.count() - max_recom)
+        )
+        .limit(max_recom)
+        .all()
+    )
+    for rec in recommendations:
+        rec.product.title = rec.product.title.replace("amp;", "")
+    db.session.commit()
+    return render_template("home.html", recommendations=recommendations)
 
 
 @main.get("/about")

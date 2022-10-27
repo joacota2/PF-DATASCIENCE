@@ -1,106 +1,118 @@
 {% extends 'base.html' %}
 {% block content %}
-<ul class="list-group">
-    <li class="list-group-item">
-        <div class="col-lg-4">
-            <form method="POST" action="">
-                {{ form.hidden_tag() }}
-                <fieldset class="form-group">
-                    <legend class="border-bottom mb-4">Register</legend>
-                    <div class="col-lg">
-                        <div class="form-floating mb-3">
-
-                            {% if form.username.errors %}
-
-                            {{ form.username(class='form-control is-invalid',
-                            id='floatingUsername',placeholder="name@example.com") }}
-                            <div class="invalid-feedback">
-                                {% for error in form.username.errors %}
-                                <span> - {{ error }}</span>
-                                {% endfor %}
-                            </div>
-
-                            {% else %}
-
-                            {{ form.username(class='form-control', id='floatingUsername',placeholder="name@example.com")
-                            }}
-
-                            {% endif %}
-
-                            {{ form.username.label(for="floatingUsername") }}
-                        </div>
-                        <div class="form-floating mb-3">
-
-                            {% if form.email.errors %}
-
-                            {{ form.email(class='form-control is-invalid',
-                            id='floatingEmail',placeholder="name@example.com") }}
-                            <div class="invalid-feedback">
-                                {% for error in form.email.errors %}
-                                <span> - {{ error }}</span>
-                                {% endfor %}
-                            </div>
-
-                            {% else %}
-
-                            {{ form.email(class='form-control', id='floatingEmail',placeholder="name@example.com") }}
-
-                            {% endif %}
-
-                            {{ form.email.label(for="floatingEmail") }}
-                        </div>
-                        <div class="form-floating mb-3">
-
-                            {% if form.password.errors %}
-
-                            {{ form.password(class='form-control is-invalid',
-                            id='floatingPassword',placeholder="name@example.com") }}
-                            <div class="invalid-feedback">
-                                {% for error in form.password.errors %}
-                                <span> - {{ error }}</span>
-                                {% endfor %}
-                            </div>
-
-                            {% else %}
-
-                            {{ form.password(class='form-control', id='floatingPassword',placeholder="name@example.com")
-                            }}
-
-                            {% endif %}
-
-                            {{ form.password.label(for="floatingPassword") }}
-                        </div>
-                        <div class="form-floating mb-3">
-
-                            {% if form.confirm_password.errors %}
-
-                            {{ form.confirm_password(class='form-control is-invalid',
-                            id='floatingConfirmPassword',placeholder="name@example.com") }}
-                            <div class="invalid-feedback">
-                                {% for error in form.confirm_password.errors %}
-                                <span> - {{ error }}</span>
-                                {% endfor %}
-                            </div>
-
-                            {% else %}
-
-                            {{ form.confirm_password(class='form-control',
-                            id='floatingConfirmPassword',placeholder="name@example.com") }}
-
-                            {% endif %}
-
-                            {{ form.confirm_password.label(for="floatingConfirmPassword") }}
-                        </div>
+<div class="row m-3">
+    <div class="d-flex justify-content-center">
+        <div class="col-4">
+            <div class="card shadow-sm" style="background: white;border:none">
+                <div class="card-body">
+                    <div class="mb-3">
+                        <h2 class="card-title d-flex justify-content-center">Register</h2>
                     </div>
-                </fieldset>
-                {{ form.submit(class='btn btn-outline-info col-lg-4 container', style='margin-bottom:20px') }}
-            </form>
+                    <form method="POST" action="">
+                        {{ form.hidden_tag() }}
+                        <fieldset class="form-group">
+                            <div class="col-lg">
+                                <div class="form-floating mb-3">
+
+                                    {% if form.username.errors %}
+
+                                    {{ form.username(class='form-control is-invalid',
+                                    id='floatingUsername',placeholder="name@example.com") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.username.errors %}
+                                        <span> - {{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+
+                                    {% else %}
+
+                                    {{ form.username(class='form-control',
+                                    id='floatingUsername',placeholder="name@example.com")
+                                    }}
+
+                                    {% endif %}
+
+                                    {{ form.username.label(for="floatingUsername") }}
+                                </div>
+                                <div class="form-floating mb-3">
+
+                                    {% if form.email.errors %}
+
+                                    {{ form.email(class='form-control is-invalid',
+                                    id='floatingEmail',placeholder="name@example.com") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.email.errors %}
+                                        <span> - {{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+
+                                    {% else %}
+
+                                    {{ form.email(class='form-control',
+                                    id='floatingEmail',placeholder="name@example.com")
+                                    }}
+
+                                    {% endif %}
+
+                                    {{ form.email.label(for="floatingEmail") }}
+                                </div>
+                                <div class="form-floating mb-3">
+
+                                    {% if form.password.errors %}
+
+                                    {{ form.password(class='form-control is-invalid',
+                                    id='floatingPassword',placeholder="name@example.com") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.password.errors %}
+                                        <span> - {{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+
+                                    {% else %}
+
+                                    {{ form.password(class='form-control',
+                                    id='floatingPassword',placeholder="name@example.com")
+                                    }}
+
+                                    {% endif %}
+
+                                    {{ form.password.label(for="floatingPassword") }}
+                                </div>
+                                <div class="form-floating mb-3">
+
+                                    {% if form.confirm_password.errors %}
+
+                                    {{ form.confirm_password(class='form-control is-invalid',
+                                    id='floatingConfirmPassword',placeholder="name@example.com") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.confirm_password.errors %}
+                                        <span> - {{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+
+                                    {% else %}
+
+                                    {{ form.confirm_password(class='form-control',
+                                    id='floatingConfirmPassword',placeholder="name@example.com") }}
+
+                                    {% endif %}
+
+                                    {{ form.confirm_password.label(for="floatingConfirmPassword") }}
+                                </div>
+                            </div>
+                        </fieldset>
+                        <div class="d-flex justify-content-center">
+                            {{ form.submit(class='btn btn-dark col-lg-6 container', style='margin-bottom:20px') }}
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer" style="background: white;border:none">
+                    <a class="text-muted" style="text-decoration:none">
+                        Already got an acount? <a href="{{ url_for('auth.login') }}" style="color: black;">Login</a>
+                    </a>
+                </div>
+            </div>
         </div>
-    </li>
-    <li class="list-group-item">
-        <a class="text-muted">
-            Already got an acount? <a class="ml-2" href="{{ url_for('auth.login') }}">Login</a>
-        </a>
-    </li>
-</ul>
+    </div>
+</div>
 {% endblock %}

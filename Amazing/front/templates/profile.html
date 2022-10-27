@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="card d-flex justify-content-center">
-    <div class="col-4 d-flex justify-content-center align-items-center text-center">
+<div class="row d-flex justify-content-center mt-3">
+    <div class="card col-4 d-flex justify-content-center align-items-center text-center me-2">
         <div class="card-body">
             <img src="{{ pfp }}" class="rounded-circle account-img" style="width:300px;height:300px">
             <h2>{{current_user.username}}</h2>
@@ -11,7 +11,7 @@
                 password</a>
         </div>
     </div>
-    <div class="col-4">
+    <div class="card col-4">
         <div class="card-body">
             <h4 class="card-title">Reviews:</h4>
             <h1 class="card-text">{{ reviews }}</h1>

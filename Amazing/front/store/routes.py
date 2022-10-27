@@ -175,7 +175,7 @@ def single_checkout_success(asin):
     product = Products.query.filter_by(asin=asin).first()
     if "data" in session and product:
         data = session["data"]
-        current_user.send_purchase_email(product=product, data=data,mode='single')
+        current_user.send_purchase_email(product=product, data=data, mode="single")
         purchase = UsersPurchases(user_id=current_user.id, asin=product.asin)
         db.session.add(purchase)
         db.session.commit()
@@ -216,7 +216,7 @@ def discounts():
                 )
             )
             .order_by(Products.price.desc())
-            .offset(randint(1, 20000))
+            .offset(randint(1, Products.query.count() - 12))
             .limit(12)
             .all()
         )
