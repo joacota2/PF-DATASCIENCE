@@ -27,3 +27,4 @@ Amazon, the American multinational that sells goods online, is looking for new s
 - [Model/doc_english](https://github.com/joacota2/PF-DATASCIENCE/blob/main/Modelo/doc_english.md) to learn more about **ETL** and **Recomendation System**.
 - [Uploading Data to Google Cloud Storage/README_EN.md](https://github.com/joacota2/PF-DATASCIENCE/blob/main/Uploading%20Data%20to%20Google%20Cloud%20Storage/README_EN.md) to learn more about **Pipeline** and **Cloud Storage**.
 - [/Analytics_English.ipynb](https://github.com/joacota2/PF-DATASCIENCE/blob/main/Analytics_English.ipynb) to learn more about **Analytics** and **Visualization**.
+- [/front.md](https://github.com/joacota2/PF-DATASCIENCE/blob/main/Front.md) to learn more about **backend** and **frontend**.
