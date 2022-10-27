@@ -1,4 +1,4 @@
-# Pipeline: Download and Upload data
+# Pipeline: Cloud Backup
 
 In this section, the method applied to save the initial datasets in the selected database is disclosed. In this case we will use Google Cloud Storage services, which allow us to store information (datasets) in containers called buckets.
 <hr>
