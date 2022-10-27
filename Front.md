@@ -1,4 +1,4 @@
-<h1 align="center">Frontend<h1>
+# Frontend
 
 ## About
 In order to expand our project, at first we talked about developing a frontend-like app so we could ***actually use*** the results of the requested Recommendation Model. This was because the only way we had to show the results was through an Excel or CSV file. I personally (Franco) felt that it would be better show the results as a final User would get them.
