@@ -28,7 +28,7 @@ filenames = [
         'CDAndVinyl',
         'Electronics',
         'MoviesAndTV',
-        'Books',
+        #'Books',
         #'Metadata'
                 ]
 
@@ -80,7 +80,7 @@ urls =  [
         #Movies and TV
         'http://snap.stanford.edu/data/amazon/productGraph/categoryFiles/reviews_Movies_and_TV_5.json.gz',       
         #Books
-        'http://snap.stanford.edu/data/amazon/productGraph/categoryFiles/reviews_Books_5.json.gz',
+        #'http://snap.stanford.edu/data/amazon/productGraph/categoryFiles/reviews_Books_5.json.gz',
         #Metadata
         #'http://snap.stanford.edu/data/amazon/productGraph/metadata.json.gz'
                 ]
@@ -90,12 +90,9 @@ def parse(path):
         for l in g:
             yield eval(l)
 
-def save_partition(filename,df,chunksnum,type):
+def save_partition(filename,df,chunksnum):
     dfout = pd.DataFrame.from_dict(df, orient='index')
-    if type == '.csv':
-        dfout.to_csv('./Datasets/CSVs/{}_{}{}'.format(filename.replace('.json.gz',''),chunksnum,type),index=False,sep=',')
-    else: 
-        dfout.to_json(path_or_buf='./Datasets/CSVs/{}_{}{}'.format(filename.replace('.json.gz',''),chunksnum,'.json'))
+    dfout.to_csv('./Datasets/CSVs/{}_{}{}'.format(filename.replace('.json.gz',''),chunksnum,'.csv'),index=False,sep=',')
     return(True)
 
 def getChunkDF(filepath,filename,chunklen,type='.csv'):
@@ -114,12 +111,48 @@ def getChunkDF(filepath,filename,chunklen,type='.csv'):
     df[i] = d
     i += 1
     if i == chunklen:
-      save_partition(filename,df,chunksnum,type)
+      save_partition(filename,df,chunksnum)
       df = {}; chunksnum += 1; i = 0 # Reinicia variables
-  if i != 0: save_partition(filename,df,chunksnum,type)
+  if i != 0: save_partition(filename,df,chunksnum)
   return True
 
+def ReplaceNulls(filepath,filename):
+    path = os.path.join(filepath,filename)
+    df = pd.read_csv(path)
+    for i in range(df.shape[1]):
+        if (types[i] == str):
+            df.iloc[:,i] = df.iloc[:,i].fillna('no data')
+        elif (types[i] == float):
+            df.iloc[:,i] = df.iloc[:,i].fillna(0.0)
+        elif (types[i] == int):
+            df.iloc[:,i] = df.iloc[:,i].fillna(0)
+    return(df)
 
+def helpfulAndDate(filepath,filename):
+    path = os.path.join(filepath,filename)
+    df = pd.read_csv(path)
+    '''
+    path = os.path.join(filepath,filename)
+    if fileFormat == '.csv':
+        df = pd.read_csv(path)
+    else:
+        df = pd.read_json(path)
+    path = os.path.join(filepath,filename)
+    df = pd.read_csv(path)
+    '''
+    new = df["helpful"].str.split(",", n = 1, expand = True)
+    new[0]=new[0].str.replace(",","")
+    new.loc[:,0]=new.loc[:,0].map(lambda x: x.replace('[',''))
+    new.loc[:,1]=new.loc[:,1].map(lambda x: x.replace(']',''))
+    df['UsefulReviews'] = new.loc[:,0]
+    df['TotalReviews'] = new.loc[:,1]
+    df.drop(columns =["helpful"], inplace = True)
+
+    df["Date"] = pd.to_datetime(df['unixReviewTime'], unit='s')
+    df.drop(columns =["reviewTime"], inplace = True)
+    df['Date']=pd.to_datetime(df['Date'].astype(str), format='%Y/%m/%d')
+
+    return (df)
 
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = './Credentials/GCS.json'
 storage_client = storage.Client()
@@ -145,38 +178,3 @@ def upload_to_bucket(blob_name,file_path,bucket_name):
         return False
 
 types = [str, str, str, str, str, float, str, int, str]
-
-def ReplaceNulls(filepath,filename,fileFormat):
-    path = os.path.join(filepath,filename)
-    if fileFormat == '.csv':
-        df = pd.read_csv(path)
-    else:
-        df = pd.read_json(path)
-    for i in range(df.shape[1]):
-        if (types[i] == str):
-            df.iloc[:,i] = df.iloc[:,i].fillna('no data')
-        elif (types[i] == float):
-            df.iloc[:,i] = df.iloc[:,i].fillna(0.0)
-        elif (types[i] == int):
-            df.iloc[:,i] = df.iloc[:,i].fillna(0)
-    if fileFormat == '.csv': 
-        df.to_csv('./Datasets/ETL/{}'.format(filename),index=False)
-    else: 
-        df.to_json('./Datasets/ETL/{}'.format(filename))
-    return(df)
-
-def helpfulAndDate(filepath,filename):
-    path = os.path.join(filepath,filename)
-    df = pd.read_csv(path)
-    new = df["helpful"].str.split(",", n = 1, expand = True)
-    new[0]=new[0].str.replace(",","")
-    new.loc[:,0]=new.loc[:,0].map(lambda x: x.replace('[',''))
-    new.loc[:,1]=new.loc[:,1].map(lambda x: x.replace(']',''))
-    df['UsefulReviews'] = new.loc[:,0]
-    df['TotalReviews'] = new.loc[:,1]
-    df.drop(columns =["helpful"], inplace = True)
-
-    df["Date"] = pd.to_datetime(df['unixReviewTime'], unit='s')
-    df.drop(columns =["reviewTime"], inplace = True)
-    df['Date']=pd.to_datetime(df['Date'].astype(str), format='%Y/%m/%d')
-    return (df)
