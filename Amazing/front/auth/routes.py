@@ -126,6 +126,7 @@ def change_password():
         flash("Your password has been changed correctly.", category="success")
 
         return render_template("loading.html", destination="login")
+    
     return render_template(
         "reset_password.html", title="Reset your password", form=form
     )

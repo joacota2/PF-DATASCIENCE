@@ -1,65 +1,80 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="content-section row">
-    <form method="POST" action="" enctype="multipart/form-data">
-        {{ form.hidden_tag() }}
-        <fieldset class="form-group">
-            <legend class="border-bottom mb-4">Update profile</legend>
-            <div class="col-lg-4">
-                <div class="form-floating mb-3">
-
-                    {% if form.username.errors %}
-
-                    {{ form.username(class='form-control is-invalid',
-                    id='floatingUsername',placeholder="name@example.com") }}
-                    <div class="invalid-feedback">
-                        {% for error in form.username.errors %}
-                        <span> - {{ error }}</span>
-                        {% endfor %}
+<div class="row m-3">
+    <div class="d-flex justify-content-center">
+        <div class="col-4">
+            <div class="card shadow-sm" style="background: white;border:none">
+                <div class="card-body">
+                    <div class="mb-3">
+                        <h2 class="card-title d-flex justify-content-center">Update information</h2>
                     </div>
+                    <form method="POST" action="">
+                        {{ form.hidden_tag() }}
+                        <fieldset class="form-group">
+                            <div class="col-lg">
+                                <div class="form-floating mb-3">
 
-                    {% else %}
+                                    {% if form.username.errors %}
 
-                    {{ form.username(class='form-control', id='floatingUsername',placeholder="name@example.com") }}
+                                    {{ form.username(class='form-control is-invalid',
+                                    id='floatingUsername',placeholder="name@example.com") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.username.errors %}
+                                        <span> - {{ error }}</span>
+                                        {% endfor %}
+                                    </div>
 
-                    {% endif %}
+                                    {% else %}
 
-                    {{ form.username.label(for="floatingUsername") }}
-                </div>
-                <div class="form-floating mb-3">
+                                    {{ form.username(class='form-control',
+                                    id='floatingUsername',placeholder="name@example.com")
+                                    }}
 
-                    {% if form.email.errors %}
+                                    {% endif %}
 
-                    {{ form.email(class='form-control is-invalid', id='floatingEmail',placeholder="name@example.com") }}
-                    <div class="invalid-feedback">
-                        {% for error in form.email.errors %}
-                        <span> - {{ error }}</span>
-                        {% endfor %}
-                    </div>
+                                    {{ form.username.label(for="floatingUsername") }}
+                                </div>
+                                <div class="form-floating mb-3">
 
-                    {% else %}
+                                    {% if form.email.errors %}
 
-                    {{ form.email(class='form-control', id='floatingEmail',placeholder="name@example.com") }}
+                                    {{ form.email(class='form-control is-invalid',
+                                    id='floatingEmail',placeholder="name@example.com") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.email.errors %}
+                                        <span> - {{ error }}</span>
+                                        {% endfor %}
+                                    </div>
 
-                    {% endif %}
+                                    {% else %}
 
-                    {{ form.email.label(for="floatingEmail") }}
-                </div>
-                <div class="mb-3">
-                    {{ form.pfp.label(class='form-label', for="fileInput") }} <br>
-                    {{ form.pfp(class='form-control', id='fileInput')}}
-                    {% if form.pfp.errors %}
-                    {% for error in form.pfp.errors %}
-                    <span class="text-danger"> - {{ error }}</span><br>
-                    {% endfor %}
+                                    {{ form.email(class='form-control',
+                                    id='floatingEmail',placeholder="name@example.com")
+                                    }}
 
-                    {% endif %}
+                                    {% endif %}
+
+                                    {{ form.email.label(for="floatingEmail") }}
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                {{ form.pfp.label(class='form-label', for="fileInput") }} <br>
+                                {{ form.pfp(class='form-control', id='fileInput')}}
+                                {% if form.pfp.errors %}
+                                {% for error in form.pfp.errors %}
+                                <span class="text-danger"> - {{ error }}</span><br>
+                                {% endfor %}
+
+                                {% endif %}
+                            </div>
+                        </fieldset>
+                        <div class="d-flex justify-content-center">
+                            {{ form.submit(class='btn btn-dark col-lg-6 container', style='margin-bottom:0px') }}
+                        </div>
+                    </form>
                 </div>
             </div>
-        </fieldset>
-
-        {{ form.submit(class='btn btn-outline-dark col-lg-2 container', style='margin-bottom:10px') }}
-        <a href="/profile" class="btn btn-outline-dark col-lg-2 container" style='margin-bottom:10px'>Cancel</a>
-    </form>
+        </div>
+    </div>
 </div>
 {% endblock %}
