@@ -5,7 +5,7 @@ In this section, the method applied to save the initial datasets in the selected
 
 ## 0. The original datasets
 
-The original datasets are saved on the official page of [Stanford Network Analysis Project](http://snap.stanford.edu/data/web-Amazon.html), which are compressed and saved in .json format.
+The original datasets are saved on the official page of [Stanford Network Analysis Project]([http://snap.stanford.edu/data/web-Amazon.html](http://jmcauley.ucsd.edu/data/amazon/links.html)), which are compressed and saved in .json format.
 
 ![1666739501212](image/README/1666739501212.png)
 <hr>

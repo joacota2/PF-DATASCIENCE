@@ -1,4 +1,4 @@
-# Documentación:
+# Documentation:
 
 
 On **metadata.ipynb** there´s the description of the work on extraction, transformation and loading of the metadata relevant to this project.
@@ -25,7 +25,7 @@ On **modelo.ipynb** there´s a description of the work on analysis, training, ev
 * Expanded the column salesRank {'category': rank}.
 * Expanded the column related to also_bought, also_viewed, buy_after_viewing, bought_together.
 
-## Carga:
+## Load:
 
 1. Partitioned the tables to chunks of 1.000.000 rows.
 2. Load those to  BigQuery using pandas .to_gbq.
@@ -73,9 +73,9 @@ etl: https://numpy.org/doc/
 
 etl: https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_gbq.html
 
-analisis: https://matplotlib.org/stable/index.html
+analysis: https://matplotlib.org/stable/index.html
 
-modelado: https://scikit-learn.org/stable/
+modeling: https://scikit-learn.org/stable/
 
 may help:
 

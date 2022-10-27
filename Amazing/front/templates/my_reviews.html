@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row m-3">
+    <div class="col"></div>
+    <div class="card shadow-sm col-6 m-1 text-center" style="border:none">
+        <div class="card-body">
+            <h1 class="card-title">Your reviews</h1>
+        </div>
+    </div>
+    <div class="col"></div>
+</div>
+<div class="row m-1">
+    {% if reviews.items %}
+    <div class="col m-1">
+        {% for review in reviews %}
+        <div class="card shadow-sm row mb-3" style="border:none">
+            <h4 class="card-header" style="border: none;background:white;">Posted at <a
+                    href="/loading/product/{{review.product.asin}}" style="color:#ff9900">{{review.product.title}}</a>
+            </h4>
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h3 class="card-title">{{ review.summary }}</h3>
+                    <p class="text-muted">{{ review.Date }}</p>
+                </div>
+                {% set help = listify(review.helpful) %}
+                {% set stars = overall_stars(review.overall) %}
+                <h3 class="card-title" style="color:#ff9900">
+                    {{ stars }}
+                </h3>
+                <blockquote class="blockquote">
+                    <p>{{ review.reviewText }}</p>
+                    <footer class="blockquote-footer">{{ review.reviewerName }}</footer>
+                </blockquote>
+
+            </div>
+            <div class="card-footer" style="background: white;border:none">
+                <button class="card-link btn btn-success disabled" id="helpful-button-{{review.id}}"
+                    onclick="helpful('{{ review.id }}')" disabled>
+                    <i class="bi bi-hand-thumbs-up-fill"></i>
+                    <span id="helpful-{{review.id}}">{{
+                        (listify(review.helpful)[0])+(review.helpful_users|length)
+                        }}</span>
+                </button>
+                <button class="card-link btn btn-danger disabled" id="unhelpful-button-{{review.id}}"
+                    onclick="nothelpful('{{ review.id }}')" disabled>
+                    <i class="bi bi-hand-thumbs-down-fill"></i>
+                    <span id="unhelpful-{{review.id}}">{{
+                        (listify(review.helpful)[1])+(review.not_helpful_users|length)
+                        }}</span>
+                </button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="card shadow-sm col m-1 text-center" style="border:none">
+        <div class="card-body">
+            <p class="m-1 text-center text-muted">There's no reviews to show right now.
+            </p>
+        </div>
+    </div>
+    {% endif %}
+</div>
+<!-- Page selector -->
+{% if reviews.items %}
+<div class="col"></div>
+<div class="col mb-3">
+    <div class="d-flex justify-content-center align-items-center">
+        <div class="m-1 btn-group" role="group">
+            {% if reviews.page != 1 %}
+            <a href="{{ url_for('users.reviews',page=reviews.page-1) }}" class="btn btn-outline-dark"><i
+                    class="bi bi-arrow-left"></i></a>
+            {% endif %}
+            {% for page_num in reviews.iter_pages(left_edge=1,right_edge=1,left_current=1,right_current=1) %}
+            {% if page_num %}
+            {% if reviews.page == page_num %}
+            <a href="{{ url_for('users.reviews',page=page_num) }}" class="btn btn-dark">{{page_num}}</a>
+
+            {% else %}
+            <a href=" {{ url_for('users.reviews',page=page_num) }}" class="btn btn-outline-dark">{{page_num}}</a>
+
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+            <a href="{{ url_for('users.reviews',page=reviews.page+1) }}" class="btn btn-outline-dark"><i
+                    class="bi bi-arrow-right"></i></a>
+        </div>
+    </div>
+</div>
+<div class="col"></div>
+{% endif %}
+{% endblock %}
