@@ -60,6 +60,7 @@ class Users(db.Model, UserMixin):
     cart = db.relationship("UsersCart", backref="user", passive_deletes=True)
     purchases = db.relationship("UsersPurchases", backref="user", passive_deletes=True)
     discounts = db.relationship("UsersDiscounts", backref="user", passive_deletes=True)
+    # recommendations = db.relationship()
 
     def get_reset_token(self):
         s = TimedSerializer(app.config["SECRET_KEY"], "confirmation")
@@ -306,6 +307,9 @@ class Products(db.Model):
         "UsersFavorites", backref="product", passive_deletes=True
     )
     carts = db.relationship("UsersCart", backref="product", passive_deletes=True)
+    recommendations = db.relationship(
+        "UsersRecommendations", backref="product", passive_deletes=True
+    )
 
 
 class Reviews(db.Model):
@@ -315,7 +319,9 @@ class Reviews(db.Model):
         db.Text, db.ForeignKey("users.id", ondelete="CASCADE"), nullable=False
     )
     asin = db.Column(
-        db.Text, db.ForeignKey("metaLORD.asin", ondelete="CASCADE"), nullable=False
+        db.Text,
+        db.ForeignKey("metaLORD.asin", ondelete="CASCADE"),
+        nullable=False,
     )
     reviewerName = db.Column(db.Text, nullable=True)
     helpful = db.Column(db.Text, default=str([0, 0]))
@@ -365,7 +371,9 @@ class UsersFavorites(db.Model):
         db.Text, db.ForeignKey("users.id", ondelete="CASCADE"), nullable=False
     )
     asin = db.Column(
-        db.Text, db.ForeignKey("metaLORD.asin", ondelete="CASCADE"), nullable=False
+        db.Text,
+        db.ForeignKey("metaLORD.asin", ondelete="CASCADE"),
+        nullable=False,
     )
 
 
@@ -375,7 +383,9 @@ class UsersCart(db.Model):
         db.Text, db.ForeignKey("users.id", ondelete="CASCADE"), nullable=False
     )
     asin = db.Column(
-        db.Text, db.ForeignKey("metaLORD.asin", ondelete="CASCADE"), nullable=False
+        db.Text,
+        db.ForeignKey("metaLORD.asin", ondelete="CASCADE"),
+        nullable=False,
     )
 
 
@@ -386,7 +396,9 @@ class UsersPurchases(db.Model):
         db.Text, db.ForeignKey("users.id", ondelete="CASCADE"), nullable=False
     )
     asin = db.Column(
-        db.Text, db.ForeignKey("metaLORD.asin", ondelete="CASCADE"), nullable=False
+        db.Text,
+        db.ForeignKey("metaLORD.asin", ondelete="CASCADE"),
+        nullable=False,
     )
 
 
@@ -396,9 +408,22 @@ class UsersDiscounts(db.Model):
         db.Text, db.ForeignKey("users.id", ondelete="CASCADE"), nullable=False
     )
     asin = db.Column(
-        db.Text, db.ForeignKey("metaLORD.asin", ondelete="CASCADE"), nullable=False
+        db.Text,
+        db.ForeignKey("metaLORD.asin", ondelete="CASCADE"),
+        nullable=False,
     )
     discount = db.Column(db.Integer, default=randint(3, 18))
 
 
-# ! TODO RECOMMENDATIONS
+class UsersRecommendations(db.Model):
+    __tablename__ = "recomendaciones2"
+    title = db.Column(db.Text, primary_key=True)
+    asin = db.Column(
+        db.Text,
+        db.ForeignKey("metaLORD.asin", ondelete="CASCADE"),
+        nullable=False,
+    )
+    Estimate_Score = db.Column(db.Float, nullable=True)
+    username = db.Column(
+        db.Text, db.ForeignKey("users.username", ondelete="CASCADE"), nullable=False
+    )

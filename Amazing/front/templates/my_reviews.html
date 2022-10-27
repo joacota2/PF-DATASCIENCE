@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="row m-1">
+<div class="row m-3">
     <div class="col"></div>
     <div class="card shadow-sm col-6 m-1 text-center" style="border:none">
         <div class="card-body">
@@ -62,27 +62,29 @@
     {% endif %}
 </div>
 <!-- Page selector -->
-{% if reviews.items and current_user.reviews|length > 5 %}
+{% if reviews.items %}
 <div class="col"></div>
-<div class="col-6 d-flex justify-content-center">
-    <div class="m-1 btn-group" role="group">
-        {% if reviews.page != 1 %}
-        <a href="{{ url_for('users.reviews',page=reviews.page-1) }}" class="btn btn-outline-dark"><i
-                class="bi bi-arrow-left"></i></a>
-        {% endif %}
-        {% for page_num in reviews.iter_pages(left_edge=1,right_edge=1,left_current=1,right_current=1) %}
-        {% if page_num %}
-        {% if reviews.page == page_num %}
-        <a href="{{ url_for('users.reviews',page=page_num) }}" class="btn btn-dark">{{page_num}}</a>
+<div class="col mb-3">
+    <div class="d-flex justify-content-center align-items-center">
+        <div class="m-1 btn-group" role="group">
+            {% if reviews.page != 1 %}
+            <a href="{{ url_for('users.reviews',page=reviews.page-1) }}" class="btn btn-outline-dark"><i
+                    class="bi bi-arrow-left"></i></a>
+            {% endif %}
+            {% for page_num in reviews.iter_pages(left_edge=1,right_edge=1,left_current=1,right_current=1) %}
+            {% if page_num %}
+            {% if reviews.page == page_num %}
+            <a href="{{ url_for('users.reviews',page=page_num) }}" class="btn btn-dark">{{page_num}}</a>
 
-        {% else %}
-        <a href=" {{ url_for('users.reviews',page=page_num) }}" class="btn btn-outline-dark">{{page_num}}</a>
+            {% else %}
+            <a href=" {{ url_for('users.reviews',page=page_num) }}" class="btn btn-outline-dark">{{page_num}}</a>
 
-        {% endif %}
-        {% endif %}
-        {% endfor %}
-        <a href="{{ url_for('users.reviews',page=reviews.page+1) }}" class="btn btn-outline-dark"><i
-                class="bi bi-arrow-right"></i></a>
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+            <a href="{{ url_for('users.reviews',page=reviews.page+1) }}" class="btn btn-outline-dark"><i
+                    class="bi bi-arrow-right"></i></a>
+        </div>
     </div>
 </div>
 <div class="col"></div>
