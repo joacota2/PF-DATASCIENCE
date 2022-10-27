@@ -3,7 +3,7 @@ env: flex
 entrypoint: py main.py
 
 runtime_config:
-  python_version: 3.10.9
+  python_version: 3.7
 
 manual_scaling:
   instances: 1
